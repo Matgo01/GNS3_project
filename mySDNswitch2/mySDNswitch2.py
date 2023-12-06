@@ -5,6 +5,7 @@ from Sensor import Sensor
 class SDNController:
     def __init__(self,sdn_address,sdn_port):
         #dizionario per mantenere riferiementi a switch e sensori
+        self.cache = {}
         self.switches = {}
         self.sensors = {}
         #soglia di conegestione del traffico
@@ -67,8 +68,14 @@ class SDNController:
             self.analyze_sensor_data(sensor_data, switch_info)
 
     def analyze_sensor_data(self, sensor_data, switch_info):
-        #analizzo i dati dei sensori per la congestione del traffico
+        # Analizzo i dati dei sensori per la congestione del traffico
         traffic_data = sensor_data.get_traffic_data(switch_info)
+
+        # Aggiunta del controllo per verificare se traffic_data è iterable
+        if not hasattr(traffic_data, '__iter__'):
+            self.log_error("Dati del traffico non sono iterabili.")
+            return
+
         for link in traffic_data:
             if link.bandwidth_usage > self.THRESHOLD:
                 self.send_notification(f"congestione rilevata sul link {link.name}")
@@ -172,9 +179,9 @@ class SDNController:
             sensor_data = sensor.get_data()
             self.cache[sensor_name] = sensor_data
 
-    def prioritize_traffic(self, link):
+    def prioritize_traffic(self, link,switch):
         #ottengo i flussi di traffico e ordino per priorità
-        flows = self.get_flows()
+        flows = self.get_flows(switch=switch)
         flows.sort(key=lambda flow: flow.priority)
         #configuro lo switch per prioritare i flussi
         for flow in flows:
@@ -195,7 +202,12 @@ def main():
         while True:
             controller.monitor_network()
             flows = controller.get_flows(switch)
-            for link in controller.analyze_sensor_data():
+            switch_info = switch.get_info()
+            sensor_data = sensor.get_data('MySDNswitch')
+            if not hasattr(sensor_data, '__iter__'):
+                controller.log_error("Dati del sensore non sono iterabili.")
+                continue
+            for link in controller.analyze_sensor_data(sensor_data,switch_info):
                 if link.bandwidth_usage > controller.THRESHOLD:
                     #configuro lo switch in caso di congestione
                     controller.configure_switch(switch, link)

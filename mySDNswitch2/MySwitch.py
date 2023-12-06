@@ -278,7 +278,7 @@ class MySwitch:
             self.close()
 
 # Creo un'istanza di MySwitch con i parametri desiderati
-my_switch = MySwitch(name="Switch1", bridge_name="br0", controller_ip="127.0.0.1", controller_port=6653)
+my_switch = MySwitch(name="Switch1", bridge_name="br0", controller_ip="127.0.0.1", controller_port=90)
 
 # Avvio e monitoro lo switch
 my_switch.start_and_monitor_traffic()

@@ -70,14 +70,14 @@ class Sensor:
         Restituisce i dati del link associato a uno switch.
 
         :param switch_name: Nome dello switch.
-        :return: Oggetto Link o None se non ci sono dati disponibili.
+        :return: Oggetto Link o lista vuota se non ci sono dati disponibili.
         """
         link_data = self.data.get(switch_name)
         if link_data is not None:
-            return link_data
+            return [link_data]  # Restituisce i dati del link come lista
         else:
             print(f"Nessun dato disponibile per lo switch {switch_name}")
-            return None
+            return []  # Restituisce una lista vuota se non ci sono dati disponibili
 
     def add_traffic_data(self, link):
         # Aggiunge un oggetto Link ai dati di traffico
