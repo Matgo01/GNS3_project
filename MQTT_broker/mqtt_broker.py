@@ -6,9 +6,8 @@ import paho.mqtt.client as mqtt
 
 class MyMQTTPublisher:
 
-    def __init__(self, broker_address, topic, sleep_time, sleep_time_sd):
+    def __init__(self,  topic, sleep_time, sleep_time_sd):
         self.client = mqtt.Client()
-        self.broker_address = broker_address
         self.topic = topic
         self.sleep_time = sleep_time
         self.sleep_time_sd = sleep_time_sd
@@ -23,7 +22,7 @@ class MyMQTTPublisher:
             print("Unexpected disconnection.")
 
     def connect(self):
-        self.client.connect(host=self.broker_address, port=5020, keepalive=30)
+        self.client.connect(host='127.0.0.1', port=5020, keepalive=30)
 
     def start_publishing(self):
         self.client.loop_start()
@@ -49,7 +48,6 @@ if __name__ == "__main__":
     config["MQTT_TOPIC_PUB"] = config["MQTT_TOPIC_PUB"] + "/" + config["HOSTNAME"]
 
     publisher = MyMQTTPublisher(
-        broker_address=config["MQTT_BROKER_ADDR"],
         topic=config["MQTT_TOPIC_PUB"],
         sleep_time=config["SLEEP_TIME"],
         sleep_time_sd=config["SLEEP_TIME_SD"]

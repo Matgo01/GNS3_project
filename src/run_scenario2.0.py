@@ -8,7 +8,7 @@ password = "gns3"
 # Crea l'oggetto Server
 server = Server(addr=indirizzo_ip, port=porta,auth=(utente, password),user=utente, password=password)
 # Ottiene il progetto GNS3 specifico per il nome
-project = get_project_by_name(server,"myProject_matteo70")
+project = get_project_by_name(server,"myProject_matteo-mt")
 #avvia i nodi presenti nel progetto dato il loro nome
 start_node_by_name(server,project,'matgo01-my-sdnswitch2-mt')
 start_node_by_name(server,project,'matgo01-my-router2-mt')

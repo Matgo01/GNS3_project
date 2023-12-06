@@ -8,7 +8,7 @@ gns3_server="http://192.168.105.130:80"
 
 
 #nome del progetto gns3
-project_name="myProject_matteo_final"
+project_name="myProject_matteo_mt"
 
 #creazione di una connessione al server gns3
 gns3=Gns3Connector(gns3_server)
