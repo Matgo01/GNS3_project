@@ -41,7 +41,7 @@ class IoTDeviceNumber6:
     def send_data(self,data):
         #invio dati allo switch tramite mqtt
         message = f"MQTT_MESSAGE\n{data}"
-        self.client.publish( "data", message)
+        self.client.publish( "inquinamento", message)
         print(f"dati pubblicati")
         #client.disconnect()
 
@@ -82,7 +82,7 @@ def main():
     #device= IoTDeviceNumber3('192.168.3.1', 'aa:bb:cc:dd:ee:ff', switch)
     device = IoTDeviceNumber6('192.168.3.1', 'aa:bb:cc:dd:ee:ff')
     device.connect()
-    device.subscribe_to_topic('citta fittizia')
+    device.subscribe_to_topic('inquinamento')
     #Indico il path
     path = os.path.join('JSON.json')
 

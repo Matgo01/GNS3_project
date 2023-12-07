@@ -39,7 +39,7 @@ class IoTDeviceNumber8:
     def send_data(self,data):
         #invio dati allo switch tramite mqtt
         message = f"MQTT_MESSAGE\n{data}"
-        self.client.publish( "data", message)
+        self.client.publish( "informazioni generali", message)
         print(f"dati pubblicati")
         #client.disconnect()
 
@@ -83,7 +83,7 @@ def main():
     with open(path) as f:
         data = f.read()
     #iscrizione al topic
-    device.subscribe_to_topic('citta fittizia')
+    device.subscribe_to_topic('informazioni generali')
 
     #ciclo di controllo sullo stato del server mqtt
     while True:

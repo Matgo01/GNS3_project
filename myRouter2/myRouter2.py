@@ -6,6 +6,8 @@ import time
 from flask import Flask, request, jsonify
 import logging
 import signal
+from myDB import DB_connection, create_table_if_not_exists, create_database_if_not_exists, insert_data_into_table
+
 
 logging.basicConfig(level=logging.INFO)
 
@@ -65,6 +67,9 @@ def handle_connection_mqtt(client_socket):
         if data.startswith(b"MQTT_SUBSCRIBE\n"):
             # Estrai il nome del topic dall'iscrizione
             topic_name = data.split(b"\n", 1)[1]
+            #DB_connection()
+            #create_database_if_not_exists()
+            #create_table_if_not_exists('Topic)
 
             #mqtt_client.subscribe(topic_name.decode("utf-8"))
             print(f"Iscritto al topic '{topic_name.decode('utf-8')}'")
@@ -74,9 +79,13 @@ def handle_connection_mqtt(client_socket):
 
         elif data.startswith(b"MQTT_MESSAGE\n"):
             # Estrai il payload MQTT
+            #topic,message_payload = data.split(b"\n", 1)[1]
             message_payload = data.split(b"\n", 1)[1]
-
             # Pubblica il messaggio sul topic desiderato
+            #DB_connection()
+            #create_database_if_not_exists("MQTT_DB")
+            #insert_data_into_table(topic,message_payload)
+            #create_table_if_not_exist(topic)
             #mqtt_client.publish("data", message_payload)
 
             # Invia una risposta al dispositivo
