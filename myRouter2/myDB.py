@@ -8,7 +8,7 @@ parametri_connessione = {
     'host': 'localhost',
     'user': 'il_tuo_utente',
     'password': 'la_tua_password',
-    'database': 'il_tuo_database',
+    'database': 'postgres',
     'port':5432
 }
 
