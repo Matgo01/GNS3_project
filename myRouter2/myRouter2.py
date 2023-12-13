@@ -79,12 +79,12 @@ def handle_connection_mqtt(client_socket):
 
         elif data.startswith(b"MQTT_MESSAGE\n"):
             # Estrai il payload MQTT
-            #topic,message_payload = data.split(b"\n", 1)[1]
+            topic,message_payload = data.split(b"\n", 1)[1]
             message_payload = data.split(b"\n", 1)[1]
             # Pubblica il messaggio sul topic desiderato
-            #DB_connection()
-            #create_database_if_not_exists("MQTT_DB")
-            #insert_data_into_table(topic,message_payload)
+            DB_connection()
+            create_database_if_not_exists("MQTT_DB")
+            insert_data_into_table(topic,message_payload)
             #create_table_if_not_exist(topic)
             #mqtt_client.publish("data", message_payload)
 

