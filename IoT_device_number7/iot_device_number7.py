@@ -39,7 +39,7 @@ class IoTDeviceNumber7:
     def send_data(self,data):
         #invio dati allo switch tramite mqtt
         message = f"MQTT_MESSAGE\n{data}"
-        self.client.publish( "meteo", message)
+        self.client.publish("meteo", message)
         print(f"dati pubblicati")
         #client.disconnect()
 

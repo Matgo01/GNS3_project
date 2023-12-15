@@ -39,7 +39,7 @@ class MyMQTTPublisher:
         self.client.loop_stop()
 
 if __name__ == "__main__":
-    config = {"MQTT_BROKER_ADDR": "127.0.0.1:5030", "MQTT_TOPIC_PUB": "test/topic", "SLEEP_TIME": 1,
+    config = {"MQTT_BROKER_ADDR": "127.0.0.1:5020", "MQTT_TOPIC_PUB": "test/topic", "SLEEP_TIME": 1,
               "SLEEP_TIME_SD": 0.1, "HOSTNAME": socket.gethostname()}
 
     for c in ("SLEEP_TIME", "SLEEP_TIME_SD"):
