@@ -18,11 +18,12 @@ class MyMQTTPublisher:
         print(mqtt.connack_string(rc))
 
     def on_disconnect(self, client, userdata, rc):
+        print(f"Disconnected with result code {rc}")
         if rc != 0:
             print("Unexpected disconnection.")
 
     def connect(self):
-        self.client.connect(host='127.0.0.1', port=5020, keepalive=30)
+        self.client.connect(host='127.0.0.1', port=5020, keepalive=100)
 
     def start_publishing(self):
         self.client.loop_start()
