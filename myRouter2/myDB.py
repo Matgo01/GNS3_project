@@ -71,7 +71,7 @@ def create_table_if_not_exists():
         cursor = connection.cursor()
 
         # Verifica se la tabella esiste già
-        table_name=input('')
+        table_name = input("Inserisci il nome della tabella ...")
         table_exists_query = sql.SQL("SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = %s);")
         cursor.execute(table_exists_query, [table_name])
         table_exists = cursor.fetchone()[0]
