@@ -52,7 +52,7 @@ def create_database_if_not_exists(db_name):
 
 
 
-def create_table_if_not_exists(table_name, columns_definition=None):
+def create_table_if_not_exists():
 
     global connection
 
@@ -64,25 +64,26 @@ def create_table_if_not_exists(table_name, columns_definition=None):
         cursor = connection.cursor()
 
         # Verifica se la tabella esiste già
+        table_name=input('')
         table_exists_query = sql.SQL("SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = %s);")
         cursor.execute(table_exists_query, [table_name])
         table_exists = cursor.fetchone()[0]
 
         # Se la tabella non esiste, la creiamo
         if not table_exists:
-            if columns_definition is None:
-                # Se columns_definition non è specificato, richiedilo da tastiera
-                columns_definition = input("Inserisci la definizione delle colonne (es. col1 INT, col2 VARCHAR(255), ...): ")
 
-            create_table_query = sql.SQL("CREATE TABLE {} ({});").format(
+         #Se columns_definition non è specificato, richiedilo da tastiera
+         columns_definition = input("Inserisci la definizione delle colonne (es. col1 INT, col2 VARCHAR(255), ...): ")
+
+         create_table_query = sql.SQL("CREATE TABLE {} ({});").format(
                 sql.Identifier(table_name),
-                sql.SQL(', ').join(map(sql.Identifier, columns_definition.split(', ')))
+             sql.SQL(', ').join(map(sql.Identifier, columns_definition.split(', ')))
             )
-            cursor.execute(create_table_query)
-            print(f"La tabella {table_name} è stata creata con successo.")
+         cursor.execute(create_table_query)
+         print(f"La tabella {table_name} è stata creata con successo.")
 
         # Commit delle modifiche
-        connection.commit()
+         connection.commit()
 
     except psycopg2.Error as e:
         print(f"Errore durante l'interazione con il database: {e}")

@@ -56,6 +56,8 @@ def handle_connection(client_socket):
     client_socket.close()
 
 
+
+
 def handle_connection_mqtt(client_socket):
     try:
         # Ricevo i dati dal client
@@ -84,10 +86,9 @@ def handle_connection_mqtt(client_socket):
             # Pubblica il messaggio sul topic desiderato
             DB_connection()
             create_database_if_not_exists("MQTT_DB")
-            insert_data_into_table(topic,message_payload)
-            #create_table_if_not_exist(topic)
+            create_table_if_not_exists()
+            insert_data_into_table(topic, message_payload)
             #mqtt_client.publish("data", message_payload)
-
             # Invia una risposta al dispositivo
             print(f"messaggio pubblicato sul topic 'data'")
             response = b"MQTT_MESSAGE_RESPONSE\nMessaggio MQTT ricevuto e pubblicato sul topic 'data'"
