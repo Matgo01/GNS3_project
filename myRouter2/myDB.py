@@ -1,5 +1,4 @@
 import json
-
 import psycopg2
 from psycopg2 import sql
 
@@ -25,7 +24,7 @@ def create_database_if_not_exists(db_name):
 
 
     # Connessione al database 'postgres'
-    connection = psycopg2.connect(parametri_connessione)
+    DB_connection()
 
     try:
         # Creazione di un cursore per eseguire comandi SQL
@@ -58,7 +57,7 @@ def create_table_if_not_exists():
 
     try:
         # Connessione al database
-        connection = psycopg2.connect(parametri_connessione)
+        DB_connection()
 
         # Creazione dell'oggetto cursore
         cursor = connection.cursor()
@@ -99,7 +98,7 @@ def insert_data_into_table(table_name, data):
     global connection
     try:
         # Connessione al database
-        connection = psycopg2.connect(parametri_connessione)
+        DB_connection()
 
         # Creazione dell'oggetto cursore
         cursor = connection.cursor()
