@@ -2,29 +2,37 @@ import json
 import psycopg2
 from psycopg2 import sql
 
-# Parametri di connessione
+#paramentri connessione
 parametri_connessione = {
-    'host': 'localhost',
-    'user': 'il_tuo_utente',
-    'password': 'la_tua_password',
-    'database': 'postgres',
-    'port':5432
-}
+        'host': 'localhost',
+        'user': 'il_tuo_utente',
+        'password': 'la_tua_password',
+        'database': 'postgres',
+        'port': 5432
+    }
+
+# Variabile globale per la connessione al database
+db_connection = None
 
 def DB_connection():
+    global db_connection
     try:
-        connection = psycopg2.connect(parametri_connessione)
+        db_connection = psycopg2.connect(**parametri_connessione)
         print("Connessione al database riuscita!")
 
-    except psycopg2.Error as e:
-        print(f"Errore durante la connessione al database: {e}")
+    except psycopg2.OperationalError as e:
+        print(f"Errore operativo durante la connessione al database: {e}")
+    except psycopg2.DatabaseError as e:
+        print(f"Errore del database durante la connessione al database: {e}")
+    except Exception as e:
+        print(f"Errore generico durante la connessione al database: {e}")
+    return db_connection
 
 def create_database_if_not_exists(db_name):
-    # Parametri di connessione al database 'postgres' (database predefinito)
 
 
     # Connessione al database 'postgres'
-    DB_connection()
+    connection= DB_connection()
 
     try:
         # Creazione di un cursore per eseguire comandi SQL
@@ -57,7 +65,7 @@ def create_table_if_not_exists():
 
     try:
         # Connessione al database
-        DB_connection()
+        connection = DB_connection()
 
         # Creazione dell'oggetto cursore
         cursor = connection.cursor()
@@ -98,7 +106,7 @@ def insert_data_into_table(table_name, data):
     global connection
     try:
         # Connessione al database
-        DB_connection()
+        connection = DB_connection()
 
         # Creazione dell'oggetto cursore
         cursor = connection.cursor()
