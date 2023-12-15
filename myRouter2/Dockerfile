@@ -19,6 +19,9 @@ RUN pip3 install gevent
 WORKDIR /app
 
 # Copia tutti i file Python necessari nella directory di lavoro
+
+COPY myDB.py /app/Router2.py
+
 COPY myRouter2.py /app/myRouter2.py
 
 #espongo la porta di ascolto
