@@ -15,6 +15,6 @@ create_docker_template_router(server, "matgo01-my-router2-mt", "matgo01/my-route
 create_docker_template(server, "matgo01-iot-device-n6-mt", "matgo01/iot-device-n6-mt", ' ')
 create_docker_template(server, "matgo01-iot-device-n7-mt", "matgo01/iot-device-n7-mt", ' ')
 create_docker_template(server, "matgo01-iot-device-n8-mt", "matgo01/iot-device-n8-mt", ' ')
-#create_docker_template(server,"matgo01-mqtt-broker2-mt","matgo01/mqtt-broker2-mt")
+create_docker_template(server,"matgo01-mqtt-broker2-mt","matgo01/mqtt-broker2-mt")
 """ In questo momento per congifurare l'interfaccia di rete è necessario farlo manualmento andando
 sulle configurazione del nodo e eliminando i commenti """
