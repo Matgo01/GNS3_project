@@ -107,14 +107,34 @@ def insert_data_into_table(table_name, data):
         # Creazione dell'oggetto cursore
         cursor = connection.cursor()
 
-        # Inserimento dei dati nella tabella
-        insert_data_query = sql.SQL("INSERT INTO {} VALUES (%s);").format(sql.Identifier(table_name))
+        # Estrarre i dati dal JSON
+        columns = []
+        values = []
 
-        # Converti la stringa JSON in un oggetto Python
-        data_json = json.dumps(data)
+        # Ricorsivamente esploriamo il JSON per estrarre colonne e valori
+        def extract_columns_and_values(obj, prefix=""):
+            for key, value in obj.items():
+                if isinstance(value, dict):
+                    extract_columns_and_values(value, prefix=f"{prefix}{key}_")
+                else:
+                    columns.append(f"{prefix}{key}")
+                    values.append(value)
+
+        extract_columns_and_values(data)
+
+        # Creare la lista di colonne e la lista di segnaposti per la query SQL
+        columns_sql = sql.SQL(", ").join([sql.Identifier(column) for column in columns])
+        placeholders_sql = sql.SQL(", ").join([sql.Placeholder()] * len(columns))
+
+        # Inserimento dei dati nella tabella
+        insert_data_query = sql.SQL("INSERT INTO {} ({}) VALUES ({});").format(
+            sql.Identifier(table_name),
+            columns_sql,
+            placeholders_sql
+        )
 
         # Passa i valori come parte di una tupla
-        cursor.execute(insert_data_query, (data_json,))
+        cursor.execute(insert_data_query, tuple(values))
 
         print(f"Dati inseriti con successo nella tabella {table_name}.")
 
