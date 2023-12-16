@@ -20,7 +20,7 @@ WORKDIR /app
 
 # Copia tutti i file Python necessari nella directory di lavoro
 
-COPY myDB.py /app/Router2.py
+COPY myDB.py /app/myDB.py
 
 COPY myRouter2.py /app/myRouter2.py
 
@@ -33,4 +33,4 @@ RUN chmod +x /app/myRouter2.py
 
 
 # Comando di avvio dell'applicazione
-ENTRYPOINT ["python3", "/app/myRouter2.py"]
+ENTRYPOINT ["python3", "/app/myRouter2.py","--host","0.0.0.0","--port","5020"]
